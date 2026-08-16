@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Feliz cumpleaños, Sharon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#151019;
+    --bg2:#1E1526;
+    --box:#1A131F;
+    --box2:#241A2C;
+    --lid:#2A1E33;
+    --lid2:#352545;
+    --purple:#C9A9E8;
+    --purple2:#B48EDB;
+    --purple-deep:#6B4A94;
+    --lilac:#EDE0FA;
+    --lilac2:#D9C2F0;
+    --ink:#1C1620;
+    --ink-soft:#4A3A55;
+    --warn:#D98CA6;
+  }
+
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{ height:100%; margin:0; }
+
+  body{
+    font-family:'Nunito', sans-serif;
+    background:linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 100%);
+    min-height:100dvh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    position:relative;
+    padding:24px;
+  }
+
+  .ambient{ position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+  .ambient span{
+    position:absolute;
+    color:var(--purple);
+    opacity:.25;
+    font-size:1rem;
+    animation:drift 7s ease-in-out infinite;
+  }
+  .ambient span:nth-child(1){ left:9%; top:16%; animation-delay:0s; font-size:.85rem;}
+  .ambient span:nth-child(2){ left:84%; top:12%; animation-delay:.8s; font-size:1.2rem;}
+  .ambient span:nth-child(3){ left:14%; top:80%; animation-delay:1.6s; font-size:.9rem;}
+  .ambient span:nth-child(4){ left:87%; top:72%; animation-delay:.4s; font-size:1.05rem;}
+  .ambient span:nth-child(5){ left:50%; top:6%; animation-delay:1.2s; font-size:.8rem;}
+  @keyframes drift{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-14px); } }
+
+  .stage{
+    position:relative; z-index:2;
+    display:flex; flex-direction:column; align-items:center; gap:16px;
+    max-width:340px; width:100%; text-align:center;
+  }
+
+  .badge{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:.8rem;
+    letter-spacing:.5px;
+    color:var(--ink);
+    background:linear-gradient(135deg, var(--purple), var(--lilac));
+    padding:5px 16px;
+    border-radius:20px;
+  }
+
+  .hint{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    color:var(--lilac);
+    font-size:clamp(1rem, 4vw, 1.2rem);
+    min-height:1.5em;
+    transition:opacity .3s ease;
+  }
+
+  .gift-wrap{
+    position:relative;
+    width:clamp(190px, 52vw, 250px);
+    height:clamp(215px, 58vw, 280px);
+    margin-top:2px;
+  }
+  .gift-wrap.jiggle{ animation:jiggle .5s ease-in-out; }
+  @keyframes jiggle{
+    0%{ transform:rotate(0deg); }
+    20%{ transform:rotate(var(--shake,6deg)); }
+    45%{ transform:rotate(calc(var(--shake,6deg) * -1)); }
+    70%{ transform:rotate(calc(var(--shake,6deg) * .5)); }
+    100%{ transform:rotate(0deg); }
+  }
+
+  .glow{
+    position:absolute; inset:-22%; border-radius:50%;
+    background:radial-gradient(circle, var(--purple) 0%, transparent 70%);
+    opacity:0; filter:blur(8px); transition:opacity .4s ease;
+    pointer-events:none; z-index:0;
+    animation:pulseGlow 2.6s ease-in-out infinite;
+  }
+  @keyframes pulseGlow{ 50%{ transform:scale(1.06); } }
+
+  .coupon{
+    position:absolute; left:50%; bottom:6%;
+    width:80%;
+    transform:translate(-50%, 40px) scale(.72);
+    opacity:0;
+    z-index:1;
+    pointer-events:none;
+    background:linear-gradient(160deg, var(--lilac), var(--lilac2));
+    border:2px dashed var(--purple-deep);
+    border-radius:14px;
+    padding:12px 8px;
+  }
+  .coupon.show{
+    animation:couponRise 1s cubic-bezier(.34,1.56,.64,1) forwards;
+    z-index:5;
+  }
+  @keyframes couponRise{
+    0%{ opacity:0; transform:translate(-50%,40px) scale(.72); }
+    55%{ opacity:1; transform:translate(-50%,-34%) scale(1.06); }
+    100%{ opacity:1; transform:translate(-50%,-26%) scale(1); }
+  }
+  .coupon-label{
+    display:block; font-family:'Nunito'; font-weight:700; font-size:.62rem;
+    letter-spacing:1.2px; color:var(--purple-deep); text-transform:uppercase;
+  }
+  .coupon-amount{
+    display:block; font-family:'Baloo 2'; font-weight:800; font-size:clamp(1.6rem,7vw,2.1rem);
+    color:var(--ink); line-height:1.1; margin-top:2px;
+  }
+  .coupon-note{
+    display:block; font-family:'Nunito'; font-weight:600; font-size:.68rem;
+    color:var(--ink-soft); margin-top:2px;
+  }
+
+  .box-btn{ all:unset; position:absolute; inset:0; z-index:2; display:block; cursor:pointer; }
+  .box-btn:focus-visible .box-body{ outline:3px solid var(--purple); outline-offset:4px; }
+
+  .box-body{
+    position:absolute; left:0; right:0; bottom:0; height:60%;
+    border-radius:16px;
+    background:linear-gradient(160deg, var(--box), var(--box2));
+    box-shadow:0 14px 30px -10px rgba(0,0,0,.55), inset 0 -6px 0 rgba(255,255,255,.03);
+    z-index:2;
+  }
+  .ribbon-body{
+    position:absolute; top:0; bottom:0; left:50%; width:20%;
+    transform:translateX(-50%);
+    background:linear-gradient(180deg, var(--purple), var(--purple2));
+  }
+
+  .lid{
+    position:absolute; top:0; left:-3%; right:-3%; height:42%;
+    border-radius:18px 18px 10px 10px;
+    background:linear-gradient(160deg, var(--lid), var(--lid2));
+    box-shadow:0 10px 18px -8px rgba(0,0,0,.55);
+    z-index:3;
+    transform-origin:22% 100%;
+  }
+  .gift-wrap.opening .lid{
+    transition:transform .65s cubic-bezier(.3,1.4,.5,1), opacity .55s ease .05s;
+    transform:translate(-16px,-95px) rotate(-32deg);
+    opacity:0;
+  }
+  .ribbon-lid{
+    position:absolute; top:0; bottom:0; left:50%; width:22%;
+    transform:translateX(-50%);
+    background:linear-gradient(180deg, var(--purple), var(--purple2));
+    border-radius:4px 4px 0 0;
+  }
+
+  .bow{
+    position:absolute; top:-16%; left:50%; width:68%; height:34%;
+    transform:translate(-50%,0) rotate(0deg);
+    z-index:4;
+    transition:transform .25s ease-out;
+  }
+  .gift-wrap.opening .bow{
+    transition:transform .5s ease-in, opacity .45s ease;
+    transform:translate(-50%,-60px) rotate(55deg);
+    opacity:0;
+  }
+  .bow-loop{
+    position:absolute; top:50%; width:46%; height:80%;
+    background:var(--purple);
+    border-radius:60% 60% 60% 60% / 70% 70% 30% 30%;
+  }
+  .bow-loop.left{ left:0%; transform:translateY(-50%) rotate(-20deg); }
+  .bow-loop.right{ right:0%; transform:translateY(-50%) rotate(20deg); }
+  .bow-center{
+    position:absolute; left:50%; top:50%; width:26%; aspect-ratio:1;
+    background:var(--lilac);
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    box-shadow:0 2px 4px rgba(0,0,0,.3);
+  }
+
+  .spark{
+    position:absolute; left:var(--sx, 45%); top:36%;
+    font-size:1.05rem; z-index:6; pointer-events:none;
+    animation:floatUp .9s ease-out forwards;
+  }
+  @keyframes floatUp{
+    0%{ opacity:0; transform:translate(0,0) scale(.5); }
+    25%{ opacity:1; }
+    100%{ opacity:0; transform:translate(var(--dx,10px), -90px) scale(1.15); }
+  }
+
+  .confetti{
+    position:absolute; left:50%; top:38%; width:8px; height:14px; border-radius:2px;
+    z-index:6; pointer-events:none;
+    animation:confettiFall 1.15s ease-out forwards;
+  }
+  @keyframes confettiFall{
+    0%{ transform:translate(-50%,-50%) rotate(0deg); opacity:1; }
+    100%{ transform:translate(var(--dx),var(--dy)) rotate(var(--r)); opacity:0; }
+  }
+
+  .bubble{
+    opacity:0; transform:scale(.6) translateY(10px);
+    background:var(--lilac);
+    border-radius:20px; padding:14px 20px;
+    box-shadow:0 10px 24px -8px rgba(0,0,0,.5);
+    position:relative; max-width:280px;
+  }
+  .bubble::after{
+    content:''; position:absolute; top:-10px; left:50%; transform:translateX(-50%);
+    border-width:0 10px 12px 10px; border-style:solid;
+    border-color:transparent transparent var(--lilac) transparent;
+  }
+  .bubble.show{
+    animation:bubbleIn .6s cubic-bezier(.34,1.56,.64,1) forwards .3s,
+              pulseSoft 2.4s ease-in-out 1.1s infinite;
+  }
+  @keyframes bubbleIn{
+    0%{ opacity:0; transform:scale(.6) translateY(10px); }
+    70%{ opacity:1; transform:scale(1.05) translateY(-4px); }
+    100%{ opacity:1; transform:scale(1) translateY(0); }
+  }
+  @keyframes pulseSoft{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.02); } }
+  .bubble-text{ font-family:'Baloo 2'; font-weight:700; color:var(--ink); font-size:clamp(1.05rem, 4.6vw, 1.25rem); margin:0; }
+  .bubble-sub{ margin:4px 0 0; font-size:.8rem; font-weight:600; color:var(--ink-soft); }
+
+  .clabe-card{
+    opacity:0; transform:scale(.85) translateY(10px);
+    background:#fff;
+    border-radius:18px; padding:16px 18px;
+    box-shadow:0 10px 24px -8px rgba(0,0,0,.5);
+    max-width:280px; width:100%;
+    transition:opacity .45s ease, transform .45s ease;
+  }
+  .clabe-card.show{ opacity:1; transform:scale(1) translateY(0); }
+  .clabe-label{ margin:0 0 8px; font-family:'Baloo 2'; font-weight:700; font-size:.92rem; color:var(--ink); }
+  .clabe-input{
+    width:100%; padding:10px 12px; border-radius:10px;
+    border:2px solid var(--lilac2); font-family:'Nunito'; font-weight:700;
+    font-size:.95rem; color:var(--ink); text-align:center; letter-spacing:.5px;
+    outline:none;
+  }
+  .clabe-input:focus{ border-color:var(--purple2); }
+  .wa-btn{
+    margin-top:10px; width:100%; padding:11px 14px; border:none; border-radius:12px;
+    font-family:'Nunito'; font-weight:700; font-size:.92rem; color:#fff; cursor:pointer;
+    background:linear-gradient(135deg, var(--purple-deep), var(--purple2));
+    transition:opacity .2s;
+    display:block; text-align:center; text-decoration:none;
+  }
+  .wa-btn:active{ opacity:.85; }
+  .clabe-hint{ min-height:1.1em; font-size:.75rem; font-weight:700; color:var(--warn); margin:6px 0 0; }
+
+  .replay{
+    font-family:'Nunito'; font-weight:700; color:var(--purple);
+    background:transparent; border:2px solid var(--purple);
+    padding:8px 20px; border-radius:30px; cursor:pointer;
+    opacity:0; transform:translateY(6px);
+    transition:opacity .4s ease, transform .4s ease, background .2s, color .2s;
+  }
+  .replay.show{ opacity:1; transform:translateY(0); }
+  .replay:hover{ background:var(--purple); color:var(--ink); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="ambient">
+    <span>✦</span><span>✧</span><span>⋆</span><span>✦</span><span>✧</span>
+  </div>
+
+  <div class="stage">
+    <span class="badge">🎂 18 años</span>
+    <p class="hint" id="hint">Toca la cajita 🎁</p>
+
+    <div class="gift-wrap" id="giftWrap">
+      <div class="glow" id="glow"></div>
+
+      <div class="coupon" id="coupon">
+        <span class="coupon-label">Cupón de regalo</span>
+        <span class="coupon-amount">$300 MXN</span>
+        <span class="coupon-note">para tu cumpleaños 💜</span>
+      </div>
+
+      <button class="box-btn" id="boxBtn" aria-label="Toca la cajita para abrir la sorpresa">
+        <div class="box-body"><div class="ribbon-body"></div></div>
+        <div class="lid" id="lid">
+          <div class="ribbon-lid"></div>
+          <div class="bow" id="bow">
+            <span class="bow-loop left"></span>
+            <span class="bow-loop right"></span>
+            <span class="bow-center"></span>
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div class="bubble" id="bubble">
+      <p class="bubble-text">¡Felices 18, Sharon! 🎉</p>
+      <p class="bubble-sub">que este año te traiga puras cosas buenas 💜</p>
+      <p class="bubble-sub">un regalito de Fer y Anto</p>
+    </div>
+
+    <div class="clabe-card" id="clabeCard">
+      <p class="clabe-label">¿A dónde te deposito tu regalo?</p>
+      <input class="clabe-input" id="clabeInput" type="text" inputmode="numeric" maxlength="18" placeholder="Tu CLABE (18 dígitos)">
+      <a class="wa-btn" id="sendWa" href="#">Enviar por WhatsApp 💜</a>
+      <p class="clabe-hint" id="clabeHint"></p>
+    </div>
+
+    <button class="replay" id="replay" hidden>Ábrela otra vez</button>
+  </div>
+
+<script>
+  const REQUIRED_TAPS = 6;
+  let taps = 0;
+  let opened = false;
+
+  const wrap = document.getElementById('giftWrap');
+  const boxBtn = document.getElementById('boxBtn');
+  const bow = document.getElementById('bow');
+  const glow = document.getElementById('glow');
+  const coupon = document.getElementById('coupon');
+  const bubble = document.getElementById('bubble');
+  const clabeCard = document.getElementById('clabeCard');
+  const hint = document.getElementById('hint');
+  const replay = document.getElementById('replay');
+  const clabeInput = document.getElementById('clabeInput');
+  const clabeHint = document.getElementById('clabeHint');
+  const sendWa = document.getElementById('sendWa');
+
+  const messages = [
+    'Toca la cajita 🎁',
+    'Sigue tocando…',
+    'Sigue tocando…',
+    'Algo especial se acerca… 👀',
+    'Algo especial se acerca… 👀',
+    '¡Ya casi! ✨'
+  ];
+
+  function spawnSparks(count){
+    for(let i=0;i<count;i++){
+      const s = document.createElement('span');
+      s.className = 'spark';
+      s.textContent = Math.random() < 0.5 ? '✨' : '💜';
+      s.style.setProperty('--sx', (35 + Math.random()*30) + '%');
+      s.style.setProperty('--dx', (Math.random()*40 - 20) + 'px');
+      s.style.animationDelay = (Math.random()*0.15) + 's';
+      wrap.appendChild(s);
+      setTimeout(() => s.remove(), 1000);
+    }
+  }
+
+  function spawnConfetti(){
+    const colors = ['#C9A9E8','#B48EDB','#EDE0FA','#FFFFFF','#6B4A94'];
+    for(let i=0;i<26;i++){
+      const c = document.createElement('span');
+      c.className = 'confetti';
+      c.style.background = colors[Math.floor(Math.random()*colors.length)];
+      const angle = Math.random()*Math.PI*2;
+      const dist = 60 + Math.random()*90;
+      c.style.setProperty('--dx', (Math.cos(angle)*dist) + 'px');
+      c.style.setProperty('--dy', (Math.sin(angle)*dist - 50) + 'px');
+      c.style.setProperty('--r', (Math.random()*540 - 270) + 'deg');
+      c.style.animationDelay = (Math.random()*0.12) + 's';
+      wrap.appendChild(c);
+      setTimeout(() => c.remove(), 1400);
+    }
+  }
+
+  function handleTap(){
+    if(opened) return;
+    taps++;
+    const intensity = 4 + taps*2.2;
+    wrap.style.setProperty('--shake', intensity + 'deg');
+    wrap.classList.remove('jiggle');
+    void wrap.offsetWidth;
+    wrap.classList.add('jiggle');
+    bow.style.transform = `translate(-50%,0) rotate(${(taps-1)*6}deg)`;
+    glow.style.opacity = Math.min(taps/REQUIRED_TAPS, 1) * 0.85;
+    spawnSparks(2 + Math.floor(taps/2));
+    hint.textContent = messages[Math.min(taps-1, messages.length-1)];
+    if(taps >= REQUIRED_TAPS) openBox();
+  }
+
+  function openBox(){
+    opened = true;
+    wrap.classList.add('opening');
+    hint.style.opacity = '0';
+    spawnConfetti();
+    setTimeout(() => coupon.classList.add('show'), 200);
+    setTimeout(() => bubble.classList.add('show'), 550);
+    setTimeout(() => clabeCard.classList.add('show'), 950);
+    setTimeout(() => {
+      replay.hidden = false;
+      requestAnimationFrame(() => replay.classList.add('show'));
+    }, 1900);
+  }
+
+  function resetBox(){
+    opened = false;
+    taps = 0;
+    wrap.classList.remove('opening');
+    coupon.classList.remove('show');
+    bubble.classList.remove('show');
+    clabeCard.classList.remove('show');
+    replay.classList.remove('show');
+    setTimeout(() => { replay.hidden = true; }, 400);
+    bow.style.transform = 'translate(-50%,0) rotate(0deg)';
+    glow.style.opacity = 0;
+    hint.style.opacity = '1';
+    hint.textContent = messages[0];
+    clabeHint.textContent = '';
+    clabeInput.value = '';
+  }
+
+  function sendClabe(e){
+    const val = clabeInput.value.replace(/\s+/g,'');
+    if(!/^\d{18}$/.test(val)){
+      e.preventDefault();
+      clabeHint.textContent = 'Escribe tus 18 dígitos de la CLABE 🙂';
+      clabeInput.focus();
+      return;
+    }
+    clabeHint.textContent = '';
+    const msg = encodeURIComponent(`¡Hola! 🎉 Soy Sharon, aquí está mi CLABE para mi regalo de cumpleaños: ${val} 💜`);
+    sendWa.href = `https://wa.me/525534241634?text=${msg}`;
+  }
+
+  boxBtn.addEventListener('click', handleTap);
+  boxBtn.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); handleTap(); }
+  });
+  replay.addEventListener('click', resetBox);
+  sendWa.addEventListener('click', sendClabe);
+</script>
+
+</body>
+</html>
